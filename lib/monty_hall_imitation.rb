@@ -7,19 +7,25 @@ class MontyHallImitation
   def won?(choice_changed)
     vehicle_location = rand(0...DOOR_NUM)
     player_choice = rand(0...DOOR_NUM)
-    host_choice = 
-      Set.new(SPACE)
-        .delete(vehicle_location)
-        .delete(player_choice)
-        .to_a
-        .sample
-    last_door = 
-      Set.new(SPACE)
-        .delete(host_choice)
-        .delete(player_choice)
-        .to_a
-        .sample 
-    final_choice = choice_changed ? last_door : player_choice
+    final_choice = 
+      unless choice_changed
+        player_choice
+      else
+        host_choice = 
+          Set.new(SPACE)
+            .delete(vehicle_location)
+            .delete(player_choice)
+            .to_a
+            .sample
+        last_door = 
+          Set.new(SPACE)
+            .delete(host_choice)
+            .delete(player_choice)
+            .to_a
+            .sample
+          
+        last_door
+      end
 
     vehicle_location == final_choice
   end
